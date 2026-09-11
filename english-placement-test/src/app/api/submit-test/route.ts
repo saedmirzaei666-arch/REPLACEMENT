@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { randomInt } from "node:crypto";
 
 export const runtime = "nodejs";
 
@@ -41,7 +42,13 @@ const telegramRequest = async (token: string, method: string, body: FormData) =>
 
 const addStatus = (correct: boolean) => (correct ? "✅" : "❌");
 
-function formatSubmission(data: Submission) {
+function createTrackingCode() {
+  const number = randomInt(100, 1000);
+  const letter = String.fromCharCode(randomInt(65, 91));
+  return `PTE-ROOM ${number}${letter}`;
+}
+
+function formatSubmission(data: Submission, trackingCode: string) {
   const readingMcqs = data.reading.grammarAndVocabulary
     .map((item, index) => `${index + 1}. ${item.question}\nAnswer: ${item.answer} ${addStatus(item.correct)}`)
     .join("\n\n");
@@ -54,6 +61,7 @@ function formatSubmission(data: Submission) {
 
   return [
     "📝 NEW PTE ROOM PLACEMENT TEST",
+    `🔖 Tracking code: ${trackingCode}`,
     "",
     `Name: ${data.candidate.fullName}`,
     `Age: ${data.candidate.age}`,
@@ -113,11 +121,12 @@ export async function POST(request: Request) {
     }
 
     const submission = JSON.parse(rawSubmission) as Submission;
+    const trackingCode = createTrackingCode();
     const recordings = incoming
       .getAll("recordings")
       .filter((entry): entry is File => entry instanceof File);
 
-    for (const text of splitTelegramMessage(formatSubmission(submission))) {
+    for (const text of splitTelegramMessage(formatSubmission(submission, trackingCode))) {
       const messageBody = new FormData();
       messageBody.append("chat_id", chatId);
       messageBody.append("text", text);
@@ -130,12 +139,12 @@ export async function POST(request: Request) {
       audioBody.append("audio", recordings[index], recordings[index].name);
       audioBody.append(
         "caption",
-        `${submission.candidate.fullName} — Speaking task ${index + 1}`
+        `${trackingCode} — ${submission.candidate.fullName} — Speaking task ${index + 1}`
       );
       await telegramRequest(token, "sendAudio", audioBody);
     }
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, trackingCode });
   } catch (error) {
     console.error("Test submission failed:", error);
     return NextResponse.json(
