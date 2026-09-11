@@ -59,6 +59,7 @@ export default function TestApp() {
   const [userPhone, setUserPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState("");
+  const [trackingCode, setTrackingCode] = useState("");
 
   const [result, setResult] = useState<OverallResult | null>(null);
 
@@ -252,6 +253,7 @@ export default function TestApp() {
         throw new Error(responseBody.error || "The results could not be sent.");
       }
 
+      setTrackingCode(responseBody.trackingCode);
       setResult(overall);
       setSection("result");
     } catch (error) {
@@ -295,6 +297,9 @@ export default function TestApp() {
               alt="PTE ROOM"
               className="h-20 w-auto object-contain mb-3"
             />
+            <p className="text-sm font-bold tracking-widest text-primary-700 mb-1">
+              PTE ROOM
+            </p>
             <h1 className="text-2xl font-bold text-slate-900 text-center">
               English Placement Test
             </h1>
@@ -946,6 +951,14 @@ export default function TestApp() {
           <div className="text-center py-6 bg-primary-50 rounded-2xl border border-primary-100">
             <p className="text-sm text-primary-700 mb-1">Overall CEFR Level</p>
             <p className="text-5xl font-bold text-primary-700">{result.overallLevel}</p>
+          </div>
+
+          <div className="text-center p-5 bg-emerald-50 rounded-2xl border border-emerald-200">
+            <p className="text-sm text-emerald-800 mb-2">Your tracking code</p>
+            <p className="text-2xl font-bold tracking-wide text-emerald-900">{trackingCode}</p>
+            <p className="text-sm text-emerald-800 mt-3">
+              PTE ROOM will contact you soon.
+            </p>
           </div>
 
           <div className="space-y-4">
