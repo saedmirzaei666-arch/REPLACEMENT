@@ -29,6 +29,14 @@ type Section = "intro" | "reading" | "listening" | "writing" | "speaking" | "res
 
 const SECTIONS: Section[] = ["intro", "reading", "listening", "writing", "speaking", "result"];
 
+function createTrackingCode() {
+  const randomValues = new Uint32Array(2);
+  window.crypto.getRandomValues(randomValues);
+  const number = 100 + (randomValues[0] % 900);
+  const letter = String.fromCharCode(65 + (randomValues[1] % 26));
+  return `PTE-ROOM ${number}${letter}`;
+}
+
 export default function TestApp() {
   const [section, setSection] = useState<Section>("intro");
   const [readingStep, setReadingStep] = useState(0);
@@ -180,7 +188,9 @@ export default function TestApp() {
     overall.feedback = generateFeedback(overall);
 
     try {
+      const submissionTrackingCode = createTrackingCode();
       const submission = {
+        trackingCode: submissionTrackingCode,
         candidate: {
           fullName: userName.trim(),
           age: userAge,
@@ -253,7 +263,7 @@ export default function TestApp() {
         throw new Error(responseBody.error || "The results could not be sent.");
       }
 
-      setTrackingCode(responseBody.trackingCode);
+      setTrackingCode(responseBody.trackingCode || submissionTrackingCode);
       setResult(overall);
       setSection("result");
     } catch (error) {
