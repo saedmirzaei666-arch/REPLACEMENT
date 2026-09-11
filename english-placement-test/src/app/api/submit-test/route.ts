@@ -4,6 +4,7 @@ import { randomInt } from "node:crypto";
 export const runtime = "nodejs";
 
 type Submission = {
+  trackingCode?: string;
   candidate: {
     fullName: string;
     age: string;
@@ -121,7 +122,9 @@ export async function POST(request: Request) {
     }
 
     const submission = JSON.parse(rawSubmission) as Submission;
-    const trackingCode = createTrackingCode();
+    const trackingCode = /^PTE-ROOM [0-9]{3}[A-Z]$/.test(submission.trackingCode ?? "")
+      ? submission.trackingCode!
+      : createTrackingCode();
     const recordings = incoming
       .getAll("recordings")
       .filter((entry): entry is File => entry instanceof File);
