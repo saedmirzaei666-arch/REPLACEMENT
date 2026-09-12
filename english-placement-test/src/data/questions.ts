@@ -1,4 +1,4 @@
-export type CEFRLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+
 
 export interface MCQQuestion {
   id: string;
@@ -102,6 +102,65 @@ export type Question =
 
 // ========== READING ==========
 export const readingMCQs: MCQQuestion[] = [
+  // --- Introductory grammar questions ---
+  {
+    id: "r-mcq-family",
+    type: "mcq",
+    level: "A1",
+    question: "Joe's mum has two brothers. His mum's brothers are Joe's _____.",
+    options: ["aunts", "cousins", "uncles", "nephews"],
+    correct: 2,
+  },
+  {
+    id: "r-mcq-past-negative",
+    type: "mcq",
+    level: "A1",
+    question: "What did Helen do yesterday? She went to the shopping mall, but she _____ any clothes.",
+    options: ["doesn't buy", "didn't buy", "no buys", "didn't bought"],
+    correct: 1,
+  },
+  {
+    id: "r-mcq-preposition",
+    type: "mcq",
+    level: "A1",
+    question: "Where do you live? I live _____ London.",
+    options: ["into", "on", "at", "in"],
+    correct: 3,
+  },
+  // --- Intermediate vocabulary ---
+  {
+    id: "r-mcq-vocab-1",
+    type: "mcq",
+    level: "B1",
+    question: "Because the instructions were ambiguous, several students asked for clarification. What does ‘ambiguous’ mean?",
+    options: ["unclear", "detailed", "helpful", "brief"],
+    correct: 0,
+  },
+  {
+    id: "r-mcq-vocab-2",
+    type: "mcq",
+    level: "B1",
+    question: "The company decided to expand its services after demand increased. What does ‘expand’ mean?",
+    options: ["reduce", "advertise", "make larger", "replace"],
+    correct: 2,
+  },
+  // --- Intermediate spelling ---
+  {
+    id: "r-mcq-spelling-1",
+    type: "mcq",
+    level: "B1",
+    question: "Choose the correctly spelled word.",
+    options: ["accomodation", "accommodation", "acommodation", "accommadation"],
+    correct: 1,
+  },
+  {
+    id: "r-mcq-spelling-2",
+    type: "mcq",
+    level: "B1",
+    question: "Choose the correctly spelled word.",
+    options: ["maintanance", "maintenence", "maintenance", "maintainance"],
+    correct: 2,
+  },
   // --- A1 level ---
   {
     id: "r-mcq-1",
