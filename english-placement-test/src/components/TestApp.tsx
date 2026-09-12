@@ -421,7 +421,7 @@ export default function TestApp() {
 
         {readingStep === 0 && (
           <div className="bg-white rounded-2xl shadow border p-6 space-y-6">
-            <h2 className="text-xl font-bold">Grammar & Vocabulary</h2>
+            <h2 className="text-xl font-bold">Grammar, Vocabulary & Spelling</h2>
             <p className="text-sm text-slate-500">Choose the best option for each sentence.</p>
             {readingMCQs.map((q) => (
               <div key={q.id} className="space-y-2">
