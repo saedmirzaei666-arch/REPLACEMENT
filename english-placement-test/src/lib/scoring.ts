@@ -1,4 +1,4 @@
-import type { CEFRLevel } from "@/data/questions";
+import { readingComprehension, readingMCQs, type CEFRLevel } from "@/data/questions";
 
 export interface SkillScore {
   skill: "reading" | "listening" | "writing" | "speaking";
@@ -31,8 +31,8 @@ export function calculateReadingScore(answers: Record<string, any>): SkillScore 
   let correct = 0;
   let total = 0;
 
-  // MCQs (A1 + B2)
-  const mcqIds = ["r-mcq-1", "r-mcq-2", "r-mcq-3", "r-mcq-4", "r-mcq-5", "r-comp-1"];
+  // All reading MCQs plus the reading-comprehension question.
+  const mcqIds = [...readingMCQs.map((question) => question.id), readingComprehension.id];
   mcqIds.forEach((id) => {
     total += 1;
     if (answers[id] !== undefined && answers[id] === true) correct += 1;
