@@ -133,7 +133,5 @@ export function generateFeedback(result: OverallResult): string {
 
   return `Your overall estimated CEFR level is **${overallLevel}**. 
 Your strongest skill appears to be **${strongest.skill}** (${strongest.level}), 
-while **${weakest.skill}** (${weakest.level}) may need more practice. 
-This is an automated estimate. For a more accurate assessment, especially for Writing and Speaking, 
-a human reviewer or advanced AI evaluation is recommended.`;
+while **${weakest.skill}** (${weakest.level}) may need more practice.`;
 }
